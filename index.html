@@ -1,309 +1,243 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html class="dark" lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Сейтжан — Персональный сайт</title>
-  <style>
-    :root {
-      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
-      --card-bg: rgba(255, 255, 255, 0.07);
-      --card-border: rgba(255, 255, 255, 0.12);
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --primary: #6366f1;
-      --primary-hover: #4f46e5;
-      --accent: #ec4899;
-      --accent-glow: rgba(236, 72, 153, 0.35);
-    }
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Сейтжан — Современная веб-страница</title>
+  <meta content="Современная стартовая страница с адаптивным дизайном и возможностью переключения темы." name="description"/>
+  
+  <!-- Tailwind CSS CDN with Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Tailwind Configuration -->
+  <script data-purpose="tailwind-config">
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              purple: '#8b5cf6',
+              pink: '#ec4899',
+              indigo: '#6366f1',
+            }
+          },
+          boxShadow: {
+            'glow-purple': '0 0 35px -5px rgba(168, 85, 247, 0.35)',
+            'glow-cyan': '0 0 35px -5px rgba(56, 189, 248, 0.25)',
+          }
+        }
+      }
+    };
+  </script>
 
-    [data-theme="light"] {
-      --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #e0e7ff 50%, #fce7f3 100%);
-      --card-bg: rgba(255, 255, 255, 0.85);
-      --card-border: rgba(0, 0, 0, 0.08);
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --primary: #4f46e5;
-      --primary-hover: #4338ca;
-      --accent: #db2777;
-      --accent-glow: rgba(219, 39, 119, 0.2);
-    }
+  <!-- Google Font: Inter -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+  <!-- Custom Styles for Ambient Glow & Transitions -->
+  <style data-purpose="ambient-background">
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      min-height: 100vh;
-      background: var(--bg-gradient);
-      color: var(--text-main);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      padding: 2rem 1.5rem;
-      transition: background 0.4s ease, color 0.4s ease;
+      font-family: 'Inter', sans-serif;
+      transition: background-color 0.35s ease, color 0.35s ease;
     }
 
-    header {
-      width: 100%;
-      max-width: 800px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
+    .ambient-glow-purple {
+      background: radial-gradient(circle at 50% 30%, rgba(139, 92, 246, 0.18) 0%, rgba(236, 72, 153, 0.08) 35%, transparent 70%);
     }
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.35rem 0.85rem;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 9999px;
-      font-size: 0.875rem;
-      font-weight: 500;
-      backdrop-filter: blur(8px);
+    .light .ambient-glow-purple {
+      background: radial-gradient(circle at 50% 20%, rgba(139, 92, 246, 0.12) 0%, rgba(59, 130, 246, 0.06) 40%, transparent 70%);
     }
 
-    .theme-toggle {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      color: var(--text-main);
-      border-radius: 9999px;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.2s ease;
-      backdrop-filter: blur(8px);
-    }
-
-    .theme-toggle:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    main {
-      width: 100%;
-      max-width: 800px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .hero-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 3rem 2.5rem;
+    .glass-card {
       backdrop-filter: blur(16px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      width: 100%;
-      margin-bottom: 2rem;
-    }
-
-    h1 {
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, #a5b4fc 0%, #f472b6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    [data-theme="light"] h1 {
-      background: linear-gradient(135deg, #4338ca 0%, #db2777 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    p.subtitle {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      max-width: 580px;
-      margin: 0 auto 2rem;
-    }
-
-    .interactive-zone {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.85rem 1.75rem;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: all 0.2s ease;
-      text-decoration: none;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-      color: #fff;
-      box-shadow: 0 4px 16px var(--accent-glow);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 6px 20px var(--accent-glow);
-    }
-
-    .btn-primary:active {
-      transform: translateY(0) scale(0.98);
-    }
-
-    .click-info {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      min-height: 1.5rem;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.25rem;
-      width: 100%;
-    }
-
-    .feature-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 1.5rem;
-      text-align: left;
-      backdrop-filter: blur(12px);
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(255, 255, 255, 0.25);
-    }
-
-    .feature-icon {
-      font-size: 1.8rem;
-      margin-bottom: 0.75rem;
-      display: inline-block;
-    }
-
-    .feature-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.35rem;
-    }
-
-    .feature-desc {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    footer {
-      margin-top: 3rem;
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      text-align: center;
+      -webkit-backdrop-filter: blur(16px);
     }
   </style>
 </head>
-<body>
-  <header>
-    <div class="badge">🌐 Пример веб-страницы</div>
-    <button id="themeBtn" class="theme-toggle" type="button" aria-label="Переключить тему">
-      <span id="themeIcon">☀️</span>
-      <span id="themeText">Светлая тема</span>
-    </button>
-  </header>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-purple-500/30 selection:text-white transition-colors duration-300">
+  <!-- Ambient Light Effect Container -->
+  <div aria-hidden="true" class="fixed inset-0 pointer-events-none ambient-glow-purple z-0"></div>
 
-  <main>
-    <section class="hero-card">
-      <h1>Сейтжан</h1>
-      <p class="subtitle">
+  <!-- BEGIN: SiteHeader -->
+  <header class="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-8" data-purpose="site-header">
+    <div class="flex items-center justify-between gap-4">
+      <!-- Status Badge / Project Indicator -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium border transition-colors duration-300 border-slate-300/80 bg-slate-100 text-slate-700 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-300 shadow-sm backdrop-blur-md">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+        </span>
+        <svg aria-hidden="true" class="w-4 h-4 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+        <span>Пример веб-страницы</span>
+      </div>
+
+      <!-- Theme Switcher Pill -->
+      <button aria-label="Переключить тему оформления" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium border border-slate-300/80 bg-white/80 hover:bg-white text-slate-800 dark:border-white/10 dark:bg-white/[0.04] dark:hover:bg-white/[0.09] dark:text-slate-200 shadow-sm backdrop-blur-md transition-all duration-200 cursor-pointer active:scale-95 focus:outline-none focus:ring-2 focus:ring-purple-500/50" data-purpose="theme-toggle" id="themeToggleBtn" type="button">
+        <!-- Sun Icon (shown in dark mode) -->
+        <span class="flex items-center gap-2" id="themeIconSun">
+          <svg aria-hidden="true" class="w-4 h-4 text-amber-400 animate-spin-slow" fill="currentColor" viewbox="0 0 20 20">
+            <path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+          </svg>
+          <span class="text-xs font-semibold tracking-wide">Светлая тема</span>
+        </span>
+        <!-- Moon Icon (shown in light mode) -->
+        <span class="hidden flex items-center gap-2" id="themeIconMoon">
+          <svg aria-hidden="true" class="w-4 h-4 text-indigo-600" fill="currentColor" viewbox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <span class="text-xs font-semibold tracking-wide">Тёмная тема</span>
+        </span>
+      </button>
+    </div>
+  </header>
+  <!-- END: SiteHeader -->
+
+  <!-- BEGIN: MainContent -->
+  <main class="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-14 flex-1 flex flex-col justify-center">
+    <!-- Hero Card Container -->
+    <section class="glass-card bg-white/80 dark:bg-white/[0.03] border-slate-200/80 dark:border-white/10 rounded-3xl p-8 sm:p-14 text-center shadow-2xl relative overflow-hidden transition-all duration-300 hover:border-white/20 mb-8 sm:mb-10" data-purpose="hero-section">
+      <!-- Glow Accent behind Title -->
+      <div aria-hidden="true" class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-purple-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Brand Title with Modern Gradient -->
+      <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-pink-400 to-indigo-400 filter drop-shadow-sm mb-6 inline-block">
+        Сейтжан
+      </h1>
+
+      <!-- Welcome Description -->
+      <p class="max-w-2xl mx-auto text-base sm:text-lg text-slate-600 dark:text-slate-300 font-normal leading-relaxed mb-8">
         Поздравляем! Ваш сайт успешно создан и готов к работе. Это современная стартовая страница с адаптивным дизайном и возможностью переключения темы.
       </p>
 
-      <div class="interactive-zone">
-        <button id="clickBtn" class="btn btn-primary" type="button">
-          🎉 Нажми меня!
+      <!-- Action Button Area -->
+      <div class="flex flex-col items-center justify-center gap-3">
+        <button class="group relative inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-2xl text-white font-medium text-base tracking-wide bg-gradient-to-r from-violet-600 via-purple-600 to-pink-500 hover:from-violet-500 hover:via-purple-500 hover:to-pink-400 shadow-glow-purple hover:shadow-lg active:scale-95 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-purple-500/30 cursor-pointer" data-purpose="interactive-counter-button" id="counterBtn" type="button">
+          <span aria-hidden="true" class="text-xl transition-transform duration-300 group-hover:scale-125 group-active:rotate-12">🎉</span>
+          <span class="font-semibold">Нажми меня!</span>
         </button>
-        <div id="clickCount" class="click-info">Нажатий: 0</div>
+        <!-- Dynamic Click Counter -->
+        <p class="text-sm font-medium text-slate-500 dark:text-slate-400 transition-colors" data-purpose="counter-display">
+          Нажатий: <span class="font-bold text-purple-600 dark:text-purple-300 tabular-nums" id="clickCount">0</span>
+        </p>
       </div>
     </section>
 
-    <section class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">⚡</div>
-        <div class="feature-title">Быстрый и чистый</div>
-        <div class="feature-desc">Работает прямо в браузере без установки дополнительных программ и библиотек.</div>
-      </div>
+    <!-- Features Bento Grid -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6" data-purpose="features-grid">
+      <!-- Card 1: Fast & Clean -->
+      <article class="glass-card bg-white/80 dark:bg-white/[0.025] border-slate-200/80 dark:border-white/10 rounded-2xl p-6 sm:p-7 shadow-lg hover:shadow-xl hover:border-purple-500/40 dark:hover:border-purple-500/40 transition-all duration-300 group">
+        <div class="w-12 h-12 rounded-xl bg-amber-500/10 dark:bg-amber-400/10 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform duration-200">
+          ⚡
+        </div>
+        <h2 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-purple-400 transition-colors">
+          Быстрый и чистый
+        </h2>
+        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          Работает прямо в браузере без установки дополнительных программ и библиотек.
+        </p>
+      </article>
 
-      <div class="feature-card">
-        <div class="feature-icon">📱</div>
-        <div class="feature-title">Адаптивный дизайн</div>
-        <div class="feature-desc">Отлично смотрится как на смартфонах, так и на мониторах любого размера.</div>
-      </div>
+      <!-- Card 2: Adaptive Design -->
+      <article class="glass-card bg-white/80 dark:bg-white/[0.025] border-slate-200/80 dark:border-white/10 rounded-2xl p-6 sm:p-7 shadow-lg hover:shadow-xl hover:border-indigo-500/40 dark:hover:border-indigo-500/40 transition-all duration-300 group">
+        <div class="w-12 h-12 rounded-xl bg-indigo-500/10 dark:bg-indigo-400/10 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform duration-200">
+          📱
+        </div>
+        <h2 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-indigo-400 transition-colors">
+          Адаптивный дизайн
+        </h2>
+        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          Отлично смотрится как на смартфонах, так и на мониторах любого размера.
+        </p>
+      </article>
 
-      <div class="feature-card">
-        <div class="feature-icon">🎨</div>
-        <div class="feature-title">Темы оформления</div>
-        <div class="feature-desc">Переключайтесь между тёмным и светлым оформлением в один клик.</div>
-      </div>
+      <!-- Card 3: Theme Customization -->
+      <article class="glass-card bg-white/80 dark:bg-white/[0.025] border-slate-200/80 dark:border-white/10 rounded-2xl p-6 sm:p-7 shadow-lg hover:shadow-xl hover:border-pink-500/40 dark:hover:border-pink-500/40 transition-all duration-300 group">
+        <div class="w-12 h-12 rounded-xl bg-pink-500/10 dark:bg-pink-400/10 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform duration-200">
+          🎨
+        </div>
+        <h2 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-pink-400 transition-colors">
+          Темы оформления
+        </h2>
+        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          Переключайтесь между тёмным и светлым оформлением в один клик.
+        </p>
+      </article>
     </section>
   </main>
+  <!-- END: MainContent -->
 
-  <footer>
-    <p>Создано в качестве примера • Файл: index.html</p>
+  <!-- BEGIN: SiteFooter -->
+  <footer class="relative z-10 w-full border-t border-slate-200 dark:border-white/5 py-6 mt-8" data-purpose="site-footer">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-500">
+      <p>© 2026 Сейтжан. Все права защищены.</p>
+      <div class="flex items-center gap-4">
+        <span class="inline-flex items-center gap-1.5 hover:text-slate-700 dark:hover:text-slate-300 transition-colors">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          Система готова к работе
+        </span>
+      </div>
+    </div>
   </footer>
+  <!-- END: SiteFooter -->
 
-  <script>
-    // Счётчик кликов
-    let count = 0;
-    const clickBtn = document.getElementById('clickBtn');
-    const clickCount = document.getElementById('clickCount');
+  <!-- BEGIN: InteractiveScripts -->
+  <!-- Script: Theme Toggle Functionality -->
+  <script data-purpose="theme-toggle">
+    const htmlElement = document.documentElement;
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIconSun = document.getElementById('themeIconSun');
+    const themeIconMoon = document.getElementById('themeIconMoon');
 
-    clickBtn.addEventListener('click', () => {
-      count++;
-      clickCount.textContent = `Нажатий: ${count}`;
-    });
-
-    // Переключение темы (тёмная / светлая)
-    const themeBtn = document.getElementById('themeBtn');
-    const themeIcon = document.getElementById('themeIcon');
-    const themeText = document.getElementById('themeText');
-    let isLight = false;
-
-    themeBtn.addEventListener('click', () => {
-      isLight = !isLight;
-      if (isLight) {
-        document.body.setAttribute('data-theme', 'light');
-        themeIcon.textContent = '🌙';
-        themeText.textContent = 'Тёмная тема';
+    function updateThemeUI(isDark) {
+      if (isDark) {
+        htmlElement.classList.add('dark');
+        htmlElement.classList.remove('light');
+        document.body.classList.remove('bg-slate-50', 'text-slate-900');
+        document.body.classList.add('bg-slate-950', 'text-slate-100');
+        themeIconSun.classList.remove('hidden');
+        themeIconMoon.classList.add('hidden');
       } else {
-        document.body.removeAttribute('data-theme');
-        themeIcon.textContent = '☀️';
-        themeText.textContent = 'Светлая тема';
+        htmlElement.classList.remove('dark');
+        htmlElement.classList.add('light');
+        document.body.classList.remove('bg-slate-950', 'text-slate-100');
+        document.body.classList.add('bg-slate-50', 'text-slate-900');
+        themeIconSun.classList.add('hidden');
+        themeIconMoon.classList.remove('hidden');
       }
+    }
+
+    // Toggle button handler
+    themeToggleBtn.addEventListener('click', () => {
+      const isCurrentlyDark = htmlElement.classList.contains('dark');
+      updateThemeUI(!isCurrentlyDark);
     });
   </script>
+
+  <!-- Script: Button Click Counter Functionality -->
+  <script data-purpose="click-counter">
+    let count = 0;
+    const counterBtn = document.getElementById('counterBtn');
+    const clickCountDisplay = document.getElementById('clickCount');
+
+    counterBtn.addEventListener('click', () => {
+      count += 1;
+      clickCountDisplay.textContent = count;
+
+      // Small bounce pulse effect on count update
+      clickCountDisplay.classList.add('scale-125');
+      setTimeout(() => {
+        clickCountDisplay.classList.remove('scale-125');
+      }, 150);
+    });
+  </script>
+  <!-- END: InteractiveScripts -->
 </body>
 </html>
